@@ -4,10 +4,10 @@
 
 <PageTitle>Cronos - by Erick Orlando ©</PageTitle>
 
-<h1>Cronos</h1>
+<h1 class="fw-bolder fs-large text-center mb-5"><img src="favicon.png" alt="cronos" style="width: 3em;height: 3em" /> <hr />Cronos</h1>
 
 <div class="row mx-3">
-    <div class="col-md-6">
+    <div class="col-sm-12 col-lg-6">
         <h3>Actividades de hoy @DateTime.Today.ToLongDateString()</h3>
         <table class="table table-warning table-bordered table-hover">
             <thead class="table-dark">
@@ -29,13 +29,13 @@
             </tbody>
         </table>
     </div>
-    <div class="col-md-6">
+    <div class="col-sm-12 col-lg-6">
         <h3>Actividad</h3>
         <input type="text" class="form-control mb-3" @bind="Activity" />
-        <button class="btn btn-primary" disabled="@(!DisabledButton)" @onclick="Start">Iniciar</button>
-        <button class="btn btn-success" disabled="@(DisabledButton)" @onclick="StartNew">Parcial</button>
-        <button class="btn btn-danger" disabled="@(DisabledButton)" @onclick="Stop">Detener</button>
-        <button class="btn btn-warning" @onclick="Reset">Resetear</button>
+        <button class="btn btn-primary" disabled="@(!DisabledButton)" @onclick="Start"><i class="fa fa-play me-1"></i>Iniciar</button>
+        <button class="btn btn-success" disabled="@(DisabledButton)" @onclick="StartNew"><i class="fa fa-pause me-1"></i>Parcial</button>
+        <button class="btn btn-danger" disabled="@(DisabledButton)" @onclick="Stop"><i class="fa fa-stop me-1"></i>Detener</button>
+        <button class="btn btn-warning" @onclick="Reset"><i class="fa fa-clock-o me-1"></i>Resetear</button>
         <h1>@Time</h1>
     </div>
 </div>
