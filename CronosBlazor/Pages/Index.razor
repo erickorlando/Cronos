@@ -1,0 +1,146 @@
+﻿@page "/"
+@using CronosBlazor.Shared
+@using System.Timers
+
+<PageTitle>Cronos - by Erick Orlando ©</PageTitle>
+
+<h1>Cronos</h1>
+
+<div class="row mx-3">
+    <div class="col-md-6">
+        <h3>Actividades de hoy @DateTime.Today.ToLongDateString()</h3>
+        <table class="table table-warning table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Actividad</th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Fin</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var activity in Activities)
+                {
+                    <tr>
+                        <td>@activity.Activity</td>
+                        <td>@activity.DateStart</td>
+                        <td>@activity.DateEnd</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h3>Actividad</h3>
+        <input type="text" class="form-control mb-3" @bind="Activity" />
+        <button class="btn btn-primary" disabled="@(!DisabledButton)" @onclick="Start">Iniciar</button>
+        <button class="btn btn-success" disabled="@(DisabledButton)" @onclick="StartNew">Parcial</button>
+        <button class="btn btn-danger" disabled="@(DisabledButton)" @onclick="Stop">Detener</button>
+        <button class="btn btn-warning" @onclick="Reset">Resetear</button>
+        <h1>@Time</h1>
+    </div>
+</div>
+
+@code {
+
+    private ICollection<TimerCronos> Activities { get; set; } = new List<TimerCronos>();
+
+    private string? Activity { get; set; }
+
+    private int Seconds { get; set; }
+    private bool IsRunning { get; set; }
+
+    private Timer Timer { get; set; } = default!;
+
+    private bool DisabledButton { get; set; } = true;
+
+    private void Start()
+    {
+        IsRunning = true;
+        Timer = new Timer(1000);
+        Timer.Elapsed += Timer_Elapsed;
+        Timer.Enabled = true;
+
+        Activities.Add(new TimerCronos()
+            {
+                Index = Activities.Count + 1,
+                Activity = Activity ?? string.Empty,
+                TimeStarted = 0,
+                TimeElapsed = Seconds,
+                DateStart = FormatearTiempo(Seconds)
+            });
+
+        Activity = string.Empty;
+        DisabledButton = false;
+    }
+
+    private void StartNew()
+    {
+        if (string.IsNullOrEmpty(Activity))
+            return;
+
+        var current = Activities.LastOrDefault();
+        if (current != null)
+        {
+            current.TimeElapsed = current.TimeStarted + Seconds;
+            current.DateStart = FormatearTiempo(current.TimeStarted);
+            current.DateEnd = FormatearTiempo(current.TimeElapsed);
+        }
+
+        Activities.Add(new TimerCronos()
+            {
+                Activity = Activity ?? string.Empty,
+                Index = Activities.Count + 1,
+                TimeStarted = current?.TimeElapsed ?? Seconds,
+                DateStart = FormatearTiempo(current?.TimeElapsed ?? Seconds)
+            });
+
+        Seconds = 0;
+        Activity = string.Empty;
+    }
+
+    private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
+    {
+        Seconds++;
+        Time = TimeSpan.FromSeconds(Seconds).ToString(@"hh\:mm\:ss");
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void Stop()
+    {
+        IsRunning = false;
+        Timer.Stop();
+        var current = Activities.LastOrDefault();
+        if (current != null)
+        {
+            current.TimeElapsed = current.TimeStarted + Seconds;
+            current.DateStart = FormatearTiempo(current.TimeStarted);
+            current.DateEnd = FormatearTiempo(current.TimeElapsed);
+        }
+
+        Seconds = 0;
+        Activity = string.Empty;
+        DisabledButton = true;
+    }
+
+
+    private void Reset()
+    {
+        Seconds = 0;
+        Activities.Clear();
+        DisabledButton = true;
+        IsRunning = false;
+        Timer.Stop();
+        Time = FormatearTiempo(Seconds);
+    }
+
+    private string Time { get; set; } = "00:00:00";
+
+
+    private string FormatearTiempo(int segundos)
+    {
+        TimeSpan tiempo = TimeSpan.FromSeconds(segundos);
+        return tiempo.ToString(@"hh\:mm\:ss");
+    }
+
+
+}
