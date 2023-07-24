@@ -44,6 +44,7 @@
             btnReset = new Button();
             btnExport = new Button();
             lblTime = new Label();
+            imageList1 = new ImageList(components);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)timerCronosBindingSource).BeginInit();
             SuspendLayout();
@@ -55,7 +56,7 @@
             lblTitulo.Location = new Point(12, 18);
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Size = new Size(57, 21);
-            lblTitulo.TabIndex = 0;
+            lblTitulo.TabIndex = 9;
             lblTitulo.Text = "label1";
             // 
             // dataGridView1
@@ -63,6 +64,7 @@
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { activityDataGridViewTextBoxColumn, dateStartDataGridViewTextBoxColumn, dateEndDataGridViewTextBoxColumn });
@@ -73,8 +75,8 @@
             dataGridView1.ReadOnly = true;
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(484, 222);
-            dataGridView1.TabIndex = 1;
+            dataGridView1.Size = new Size(512, 222);
+            dataGridView1.TabIndex = 8;
             // 
             // activityDataGridViewTextBoxColumn
             // 
@@ -107,7 +109,7 @@
             label2.Location = new Point(15, 301);
             label2.Name = "label2";
             label2.Size = new Size(60, 15);
-            label2.TabIndex = 2;
+            label2.TabIndex = 1;
             label2.Text = "Actividad:";
             // 
             // txtActivity
@@ -115,50 +117,65 @@
             txtActivity.Location = new Point(94, 298);
             txtActivity.Name = "txtActivity";
             txtActivity.Size = new Size(402, 23);
-            txtActivity.TabIndex = 3;
+            txtActivity.TabIndex = 0;
             // 
             // btnStart
             // 
+            btnStart.ImageAlign = ContentAlignment.MiddleLeft;
+            btnStart.ImageIndex = 0;
+            btnStart.ImageList = imageList1;
             btnStart.Location = new Point(12, 346);
             btnStart.Name = "btnStart";
-            btnStart.Size = new Size(75, 23);
-            btnStart.TabIndex = 4;
+            btnStart.Size = new Size(101, 23);
+            btnStart.TabIndex = 2;
             btnStart.Text = "Iniciar";
             btnStart.UseVisualStyleBackColor = true;
             // 
             // btnStartNew
             // 
-            btnStartNew.Location = new Point(94, 346);
+            btnStartNew.ImageAlign = ContentAlignment.MiddleLeft;
+            btnStartNew.ImageIndex = 1;
+            btnStartNew.ImageList = imageList1;
+            btnStartNew.Location = new Point(113, 346);
             btnStartNew.Name = "btnStartNew";
-            btnStartNew.Size = new Size(75, 23);
-            btnStartNew.TabIndex = 4;
+            btnStartNew.Size = new Size(101, 23);
+            btnStartNew.TabIndex = 3;
             btnStartNew.Text = "Parcial";
             btnStartNew.UseVisualStyleBackColor = true;
             // 
             // btnStop
             // 
-            btnStop.Location = new Point(175, 346);
+            btnStop.ImageAlign = ContentAlignment.MiddleLeft;
+            btnStop.ImageIndex = 2;
+            btnStop.ImageList = imageList1;
+            btnStop.Location = new Point(214, 346);
             btnStop.Name = "btnStop";
-            btnStop.Size = new Size(75, 23);
+            btnStop.Size = new Size(101, 23);
             btnStop.TabIndex = 4;
             btnStop.Text = "Detener";
             btnStop.UseVisualStyleBackColor = true;
             // 
             // btnReset
             // 
-            btnReset.Location = new Point(256, 346);
+            btnReset.ImageAlign = ContentAlignment.MiddleLeft;
+            btnReset.ImageIndex = 3;
+            btnReset.ImageList = imageList1;
+            btnReset.Location = new Point(315, 346);
             btnReset.Name = "btnReset";
-            btnReset.Size = new Size(75, 23);
-            btnReset.TabIndex = 4;
+            btnReset.Size = new Size(101, 23);
+            btnReset.TabIndex = 5;
             btnReset.Text = "Resetear";
             btnReset.UseVisualStyleBackColor = true;
             // 
             // btnExport
             // 
+            btnExport.ImageAlign = ContentAlignment.MiddleLeft;
+            btnExport.ImageIndex = 4;
+            btnExport.ImageList = imageList1;
             btnExport.Location = new Point(421, 346);
             btnExport.Name = "btnExport";
-            btnExport.Size = new Size(75, 23);
-            btnExport.TabIndex = 4;
+            btnExport.Size = new Size(103, 23);
+            btnExport.TabIndex = 6;
             btnExport.Text = "Exportar";
             btnExport.UseVisualStyleBackColor = true;
             // 
@@ -166,17 +183,28 @@
             // 
             lblTime.AutoSize = true;
             lblTime.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTime.Location = new Point(198, 388);
+            lblTime.Location = new Point(212, 388);
             lblTime.Name = "lblTime";
             lblTime.Size = new Size(112, 32);
-            lblTime.TabIndex = 2;
+            lblTime.TabIndex = 7;
             lblTime.Text = "00:00:00";
+            // 
+            // imageList1
+            // 
+            imageList1.ColorDepth = ColorDepth.Depth8Bit;
+            imageList1.ImageStream = (ImageListStreamer)resources.GetObject("imageList1.ImageStream");
+            imageList1.TransparentColor = Color.Transparent;
+            imageList1.Images.SetKeyName(0, "timerstart.png");
+            imageList1.Images.SetKeyName(1, "timerpause.png");
+            imageList1.Images.SetKeyName(2, "timercancel.png");
+            imageList1.Images.SetKeyName(3, "timerreset.png");
+            imageList1.Images.SetKeyName(4, "export.png");
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(508, 429);
+            ClientSize = new Size(536, 429);
             Controls.Add(btnExport);
             Controls.Add(btnReset);
             Controls.Add(btnStop);
@@ -214,5 +242,6 @@
         private Button btnReset;
         private Button btnExport;
         private Label lblTime;
+        private ImageList imageList1;
     }
 }
